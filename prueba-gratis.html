@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba Gratis 30 Días - MasRapido | Filas Virtuales por WhatsApp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Animaciones */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+        }
+
+        .fade-up { animation: fadeUp 0.6s ease-out; }
+        .float { animation: float 6s ease-in-out infinite; }
+        .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+        /* Backgrounds */
+        .bg-pattern {
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+        }
+
+        .mesh-gradient {
+            background:
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 4px; }
+
+        /* Hover effects */
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3); }
+
+        /* Stagger animation */
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+        .stagger-6 { animation-delay: 0.6s; }
+
+        /* Button shine effect */
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-shine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .btn-shine:hover::before {
+            left: 100%;
+        }
+
+        /* Form inputs */
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            color: white;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* FAQ accordion */
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-question {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .faq-question:hover {
+            color: #8b5cf6;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-bottom: 1.5rem;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center pulse-glow">
+                    <span class="text-xl font-bold">⚡</span>
+                </div>
+                <span class="text-2xl font-bold mono">MasRapido</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="como-funciona.html" class="text-gray-400 hover:text-white transition">Cómo Funciona</a>
+                <a href="prueba-gratis.html" class="text-white font-semibold">Probar Gratis</a>
+            </div>
+            <a href="#formulario" class="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full font-semibold btn-shine hover:shadow-lg transition">
+                Empezar Ahora
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[70vh] flex items-center justify-center pt-32 pb-20 px-6 bg-pattern overflow-hidden">
+        <!-- Background elements -->
+        <div class="absolute inset-0 mesh-gradient opacity-50"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500 rounded-full filter blur-[120px] opacity-20 float"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-[120px] opacity-20 float" style="animation-delay: -3s;"></div>
+
+        <div class="relative max-w-4xl mx-auto text-center fade-up">
+            <div class="inline-flex items-center gap-2 px-4 py-2 glass rounded-full border border-green-500/30 mb-8">
+                <span class="text-2xl">🎁</span>
+                <span class="text-sm font-medium text-green-400">Oferta Especial</span>
+            </div>
+
+            <h1 class="text-5xl lg:text-7xl font-extrabold leading-tight mb-6">
+                <span class="gradient-text">30 Días Gratis</span>
+                <span class="block mt-2 text-4xl lg:text-5xl">Sin Compromiso</span>
+            </h1>
+
+            <p class="text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-10">
+                Prueba MasRapido completamente gratis. <span class="text-white font-semibold">Sin tarjeta de crédito. Sin trucos.</span>
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6 text-sm">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                    <span class="text-gray-300">Sin tarjeta de crédito</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                    <span class="text-gray-300">Cancela cuando quieras</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                    <span class="text-gray-300">Setup en 5 minutos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario Section -->
+    <section id="formulario" class="py-20 px-6 relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass rounded-3xl p-8 md:p-12 fade-up">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold mb-4">Empieza Tu Prueba Gratis</h2>
+                    <p class="text-gray-400">Te contactaremos en 24 horas para configurar todo</p>
+                </div>
+
+                <form class="space-y-6" action="#" method="POST">
+                    <!-- Row 1: Negocio y Tipo -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Nombre del Negocio <span class="text-red-400">*</span></label>
+                            <input type="text" name="business_name" required class="form-input" placeholder="Ej: Restaurante La Plaza">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Tipo de Negocio <span class="text-red-400">*</span></label>
+                            <select name="business_type" required class="form-input">
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="restaurante">Restaurante</option>
+                                <option value="cafeteria">Cafetería</option>
+                                <option value="clinica">Clínica / Consultorio</option>
+                                <option value="salon">Salón de belleza / Barbería</option>
+                                <option value="retail">Tienda / Retail</option>
+                                <option value="gobierno">Oficina de gobierno</option>
+                                <option value="banco">Banco / Financiera</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Nombre y Apellido -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Tu Nombre <span class="text-red-400">*</span></label>
+                            <input type="text" name="first_name" required class="form-input" placeholder="Juan">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Apellido <span class="text-red-400">*</span></label>
+                            <input type="text" name="last_name" required class="form-input" placeholder="Pérez">
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Email y WhatsApp -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Email <span class="text-red-400">*</span></label>
+                            <input type="email" name="email" required class="form-input" placeholder="juan@tunegocio.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">WhatsApp / Teléfono <span class="text-red-400">*</span></label>
+                            <input type="tel" name="phone" required class="form-input" placeholder="+598 99 123 456">
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Clientes por día -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">¿Cuántos clientes atiendes por día aproximadamente?</label>
+                        <select name="daily_customers" class="form-input">
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="1-20">1 - 20 clientes</option>
+                            <option value="21-50">21 - 50 clientes</option>
+                            <option value="51-100">51 - 100 clientes</option>
+                            <option value="101-200">101 - 200 clientes</option>
+                            <option value="200+">Más de 200 clientes</option>
+                        </select>
+                    </div>
+
+                    <!-- Row 5: Mensaje opcional -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">¿Algo que quieras contarnos? (opcional)</label>
+                        <textarea name="message" rows="3" class="form-input" placeholder="Cuéntanos sobre tu negocio, dudas que tengas, o cualquier otra cosa..."></textarea>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl font-bold text-lg btn-shine hover:shadow-2xl transition flex items-center justify-center gap-3">
+                        <span>🚀</span>
+                        <span>Empezar Prueba Gratis de 30 Días</span>
+                    </button>
+
+                    <p class="text-center text-xs text-gray-500">
+                        Al enviar, aceptas nuestros <a href="#" class="text-indigo-400 hover:underline">términos</a> y <a href="#" class="text-indigo-400 hover:underline">política de privacidad</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Qué incluye -->
+    <section class="py-24 px-6 bg-pattern">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-4xl font-bold mb-4">Qué incluye tu prueba gratis</h2>
+                <p class="text-xl text-gray-400">Todo lo que necesitas para empezar</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-1">
+                    <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-layer-group text-indigo-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Filas Ilimitadas</h3>
+                    <p class="text-gray-400 text-sm">Crea todas las filas virtuales que necesites durante la prueba</p>
+                </div>
+
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-2">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fab fa-whatsapp text-green-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">WhatsApp + SMS</h3>
+                    <p class="text-gray-400 text-sm">Notificaciones automáticas incluidas sin límite</p>
+                </div>
+
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-3">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-headset text-purple-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Soporte Prioritario</h3>
+                    <p class="text-gray-400 text-sm">Te ayudamos a configurar todo en menos de 5 minutos</p>
+                </div>
+
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-4">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-bar text-blue-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Analytics Completo</h3>
+                    <p class="text-gray-400 text-sm">Métricas y reportes en tiempo real</p>
+                </div>
+
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-5">
+                    <div class="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-qrcode text-pink-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">QR Personalizado</h3>
+                    <p class="text-gray-400 text-sm">Códigos QR con el logo de tu negocio</p>
+                </div>
+
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-6">
+                    <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-yellow-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Sin Compromiso</h3>
+                    <p class="text-gray-400 text-sm">Cancela cuando quieras, sin penalizaciones</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 px-6">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-4xl font-bold mb-4">Preguntas Frecuentes</h2>
+            </div>
+
+            <div class="glass rounded-3xl p-8 fade-up">
+                <div class="faq-item active py-6">
+                    <div class="faq-question flex items-center justify-between" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-semibold pr-4">¿Realmente es gratis?</h3>
+                        <i class="fas fa-chevron-down faq-icon text-indigo-400"></i>
+                    </div>
+                    <div class="faq-answer text-gray-400">
+                        Sí, 100% gratis por 30 días. No pedimos tarjeta de crédito. Después del trial, eliges si continúas o no.
+                    </div>
+                </div>
+
+                <div class="faq-item py-6">
+                    <div class="faq-question flex items-center justify-between" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-semibold pr-4">¿Cuánto tarda el setup?</h3>
+                        <i class="fas fa-chevron-down faq-icon text-indigo-400"></i>
+                    </div>
+                    <div class="faq-answer text-gray-400">
+                        Menos de 5 minutos. Te damos el QR, lo imprimes o pones en una tablet, y ya está funcionando.
+                    </div>
+                </div>
+
+                <div class="faq-item py-6">
+                    <div class="faq-question flex items-center justify-between" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-semibold pr-4">¿Mis clientes necesitan descargar una app?</h3>
+                        <i class="fas fa-chevron-down faq-icon text-indigo-400"></i>
+                    </div>
+                    <div class="faq-answer text-gray-400">
+                        No. Solo escanean el QR con la cámara del celular y ya. 100% web, funciona en cualquier teléfono.
+                    </div>
+                </div>
+
+                <div class="faq-item py-6">
+                    <div class="faq-question flex items-center justify-between" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-semibold pr-4">¿Qué pasa después de los 30 días?</h3>
+                        <i class="fas fa-chevron-down faq-icon text-indigo-400"></i>
+                    </div>
+                    <div class="faq-answer text-gray-400">
+                        Te avisamos 5 días antes. Puedes elegir un plan ($19, $49 o custom) o cancelar sin costo.
+                    </div>
+                </div>
+
+                <div class="faq-item py-6">
+                    <div class="faq-question flex items-center justify-between" onclick="toggleFaq(this)">
+                        <h3 class="text-lg font-semibold pr-4">¿Funciona en mi país?</h3>
+                        <i class="fas fa-chevron-down faq-icon text-indigo-400"></i>
+                    </div>
+                    <div class="faq-answer text-gray-400">
+                        Sí, funciona en toda Latinoamérica. WhatsApp y SMS funcionan globalmente.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 px-6 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <a href="index.html" class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                            <span class="text-xl font-bold">⚡</span>
+                        </div>
+                        <span class="text-xl font-bold mono">MasRapido</span>
+                    </a>
+                    <p class="text-gray-400 text-sm">
+                        Elimina las filas físicas.<br/>Mejora la experiencia.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Producto</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="como-funciona.html" class="hover:text-white transition">Cómo Funciona</a></li>
+                        <li><a href="index.html#planes" class="hover:text-white transition">Precios</a></li>
+                        <li><a href="prueba-gratis.html" class="hover:text-white transition">Prueba Gratis</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Empresa</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Sobre nosotros</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Privacidad</a></li>
+                        <li><a href="#" class="hover:text-white transition">Términos</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Shitpost Section -->
+            <div class="pt-8 border-t border-gray-800">
+                <div class="glass rounded-2xl p-6 mb-8">
+                    <p class="text-sm text-gray-400 text-center mono leading-relaxed">
+                        🤖 <span class="text-indigo-400">Hecho con IA en 2026</span> • Hay dos tipos de personas: las que abrazan la IA y automatizan su negocio, y las que todavía usan Excel 97 y máquinas de fax. Ambos existen en la misma línea de tiempo, pero uno vive en el futuro y el otro es una pieza de museo. <span class="text-purple-400">Sin juzgar... bueno, quizás un poquito.</span> 🚀 Elige tu realidad con cuidado — una tiene notificaciones por WhatsApp, la otra tiene papelitos numerados.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+                    <p>&copy; 2026 MasRapido. Hecho por humanos (con superpoderes de IA). Todos los derechos reservados.</p>
+                    <div class="flex gap-6">
+                        <a href="#" class="hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const allItems = document.querySelectorAll('.faq-item');
+
+            allItems.forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+
+            faqItem.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
