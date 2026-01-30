@@ -3,881 +3,654 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ofertón Chile - Las Mejores Ofertas de Tu Barrio en WhatsApp</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>MasRapido - Filas Virtuales por WhatsApp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --neon-pink: #FF1B6D;Page_DownPage_DownPage_DownPage_DownPage_Down
-Hecho conhola@oferton            --neon-purple: #6C63FF
-59895001100            --neon-yellow: #FFD600;
-            --dark-bg: #0A0E27;
-            --darker-bg: #060916;
-            --card-bg: #12172E;
-            --text-primary: #FFFFFF;
-            --text-secondary: #A0A8D4;
-            --success-green: #00FFA3;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--darker-bg);
-            color: var(--text-primary);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0a0a0f;
+            color: #fff;
             overflow-x: hidden;
-            line-height: 1.6;
         }
-
-        /* Animated gradient background */
-        .bg-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+        
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Animaciones */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .bg-gradient::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+        }
+        
+        .fade-up { animation: fadeUp 0.6s ease-out; }
+        .float { animation: float 6s ease-in-out infinite; }
+        .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        
+        /* Backgrounds */
+        .bg-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+        }
+        
+        .mesh-gradient {
             background: 
-                radial-gradient(circle at 20% 50%, rgba(108, 99, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 27, 109, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(0, 240, 255, 0.1) 0%, transparent 50%);
-            animation: gradientShift 20s ease infinite;
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
         }
-
-        @keyframes gradientShift {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(5%, 5%) rotate(120deg); }
-            66% { transform: translate(-5%, 5%) rotate(240deg); }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        /* Header */
-        header {
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            animation: logoGlow 3s ease-in-out infinite;
         }
-
-        @keyframes logoGlow {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 27, 109, 0.5)); }
-            50% { filter: drop-shadow(0 0 20px rgba(108, 99, 255, 0.8)); }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--neon-cyan);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 6rem 2rem 4rem;
-            text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(0, 240, 255, 0.1);
-            border: 1px solid var(--neon-cyan);
-            border-radius: 50px;
-            color: var(--neon-cyan);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            animation: badgePulse 2s ease-in-out infinite;
-        }
-
-        @keyframes badgePulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 0 20px 10px rgba(0, 240, 255, 0); }
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 5.5rem);
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--neon-cyan) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 3rem;
-            animation: fadeInUp 0.8s ease-out 0.2s backwards;
-        }
-
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin: 3rem 0;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease-out 0.4s backwards;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: block;
-            line-height: 1;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        /* CTA Buttons */
-        .cta-container {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 3rem 0;
-            animation: fadeInUp 0.8s ease-out 0.6s backwards;
-        }
-
-        .btn {
-            padding: 1.2rem 3rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 4px; }
+        
+        /* Hover effects */
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3); }
+        
+        /* Stagger animation */
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        
+        /* Button shine effect */
+        .btn-shine {
             position: relative;
             overflow: hidden;
-            font-family: 'Outfit', sans-serif;
         }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            color: white;
-            box-shadow: 0 10px 40px rgba(255, 27, 109, 0.3);
-        }
-
-        .btn-primary::before {
+        .btn-shine::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
-            transition: left 0.3s;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
         }
-
-        .btn-primary:hover::before {
-            left: 0;
-        }
-
-        .btn-primary span {
-            position: relative;
-            z-index: 1;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 50px rgba(108, 99, 255, 0.4);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(0, 240, 255, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 900;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            margin-bottom: 4rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 2.5rem;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(108, 99, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--neon-purple);
-            box-shadow: 0 20px 60px rgba(108, 99, 255, 0.2);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .feature-desc {
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* How it Works */
-        .how-it-works {
-            padding: 6rem 2rem;
-            background: rgba(255, 255, 255, 0.02);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .steps {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-top: 4rem;
-        }
-
-        .step {
-            text-align: center;
-            position: relative;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 900;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 10px 40px rgba(255, 27, 109, 0.3);
-            position: relative;
-            animation: stepFloat 3s ease-in-out infinite;
-        }
-
-        .step:nth-child(2) .step-number {
-            animation-delay: 0.5s;
-            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
-        }
-
-        .step:nth-child(3) .step-number {
-            animation-delay: 1s;
-            background: linear-gradient(135deg, var(--neon-cyan), var(--success-green));
-        }
-
-        .step:nth-child(4) .step-number {
-            animation-delay: 1.5s;
-            background: linear-gradient(135deg, var(--success-green), var(--neon-yellow));
-        }
-
-        @keyframes stepFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .step-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.8rem;
-            color: var(--text-primary);
-        }
-
-        .step-desc {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Example Offers */
-        .offers-preview {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .offers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .offer-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s;
-        }
-
-        .offer-card:hover {
-            transform: scale(1.05);
-            border-color: var(--neon-pink);
-            box-shadow: 0 20px 60px rgba(255, 27, 109, 0.3);
-        }
-
-        .offer-badge {
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            padding: 0.8rem 1.5rem;
-            color: white;
-            font-weight: 700;
-            font-size: 1.8rem;
-            text-align: center;
-        }
-
-        .offer-content {
-            padding: 1.5rem;
-        }
-
-        .offer-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .offer-location {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .offer-details {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* CTA Section */
-        .final-cta {
-            padding: 6rem 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(108, 99, 255, 0.1), rgba(255, 27, 109, 0.1));
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .final-cta h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-        }
-
-        .final-cta p {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .whatsapp-number {
-            display: inline-block;
-            font-family: 'Space Mono', monospace;
-            font-size: 1.5rem;
-            color: var(--success-green);
-            background: rgba(0, 255, 163, 0.1);
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            border: 2px solid var(--success-green);
-            margin-top: 2rem;
-            font-weight: 700;
-        }
-
-        /* Footer */
-        footer {
-            padding: 3rem 2rem;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-secondary);
-        }
-
-        footer a {
-            color: var(--neon-cyan);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                padding: 4rem 1.5rem 2rem;
-            }
-
-            .hero-stats {
-                gap: 2rem;
-            }
-
-            .stat-number {
-                font-size: 2rem;
-            }
-
-            .cta-container {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .steps {
-                gap: 2rem;
-            }
-        }
-
-        /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .float-animation {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* WhatsApp Icon */
-        .whatsapp-icon {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            background: white;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .whatsapp-icon::after {
-            content: '💬';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 14px;
+        .btn-shine:hover::before {
+            left: 100%;
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
-
-    <header>
-        <div class="logo">Ofertón</div>
-        <nav class="nav-links">
-            <a href="#como-funciona">Cómo Funciona</a>
-            <a href="#ofertas">Ofertas</a>
-            <a href="#contacto">Contacto</a>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <div class="hero-badge">🔥 ¡Lanzamiento en Santiago!</div>
-        <h1>Las Mejores Ofertas<br>de Tu Barrio<br>Directo a Tu WhatsApp</h1>
-        <p class="hero-subtitle">
-            Recibe todos los días ofertas reales de restaurantes y cafés cerca de ti. 
-            100% gratis. Sin apps. Solo WhatsApp.
-        </p>
-
-        <div class="hero-stats">
-            <div class="stat">
-                <span class="stat-number">100%</span>
-                <span class="stat-label">Gratis</span>
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center pulse-glow">
+                    <span class="text-xl font-bold">⚡</span>
+                </div>
+                <span class="text-2xl font-bold mono">MasRapido</span>
             </div>
-            <div class="stat">
-                <span class="stat-number">2x1</span>
-                <span class="stat-label">Ofertas Diarias</span>
-            </div>
-            <div class="stat">
-                <span class="stat-number">3</span>
-                <span class="stat-label">Comunas</span>
-            </div>
-        </div>
-
-        <div class="cta-container">
-            <a href="https://wa.me/5491126569371?text=Hola%21%20Quiero%20recibir%20ofertas%20de%20Ofert%C3%B3n" 
-               class="btn btn-primary" 
-               target="_blank">
-                <span>📱 Recibir ofertas por WhatsApp</span>
-            </a>
-            <a href="#como-funciona" class="btn btn-secondary">
-                <span>Ver Cómo Funciona</span>
+            <a href="#demo" class="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full font-semibold btn-shine hover:shadow-lg transition">
+                Ver Demo
             </a>
         </div>
-    </section>
+    </nav>
 
-    <section class="features">
-        <h2 class="section-title">¿Por Qué Ofertón?</h2>
-        <p class="section-subtitle">La forma más fácil de ahorrar en lo que más te gusta</p>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <span class="feature-icon">📍</span>
-                <h3 class="feature-title">Ofertas de Tu Comuna</h3>
-                <p class="feature-desc">
-                    Solo recibes ofertas de locales cerca de ti. Providencia, Las Condes o Ñuñoa. 
-                    No más descuentos de lugares lejanos que nunca vas a usar.
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 pb-32 px-6 bg-pattern overflow-hidden">
+        <!-- Background elements -->
+        <div class="absolute inset-0 mesh-gradient opacity-50"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500 rounded-full filter blur-[120px] opacity-20 float"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-[120px] opacity-20 float" style="animation-delay: -3s;"></div>
+        
+        <div class="relative max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            <!-- Left: Copy -->
+            <div class="space-y-8 fade-up">
+                <div class="inline-flex items-center gap-2 px-4 py-2 glass rounded-full border border-indigo-500/30">
+                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                    <span class="text-sm font-medium text-gray-300">Sistema de Filas Virtuales</span>
+                </div>
+                
+                <h1 class="text-6xl lg:text-7xl font-extrabold leading-tight">
+                    Elimina las
+                    <span class="gradient-text block mt-2">colas físicas</span>
+                    de tu negocio
+                </h1>
+                
+                <p class="text-xl text-gray-400 leading-relaxed max-w-xl">
+                    Tus clientes se registran por WhatsApp, esperan donde quieran, y reciben notificación automática cuando sea su turno. 
+                    <span class="text-white font-semibold">Sin apps. Sin papelitos. Sin aglomeraciones.</span>
                 </p>
-            </div>
-
-            <div class="feature-card">
-                <span class="feature-icon">💰</span>
-                <h3 class="feature-title">100% Gratis</h3>
-                <p class="feature-desc">
-                    Sin suscripciones, sin cargos ocultos, sin publicidad molesta. 
-                    Simplemente ofertas bacanes todos los días en tu WhatsApp.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <span class="feature-icon">⚡</span>
-                <h3 class="feature-title">Rápido y Fácil</h3>
-                <p class="feature-desc">
-                    Te registras en 45 segundos por WhatsApp. Cada mañana a las 9 AM 
-                    te llegan las mejores ofertas del día. Así de simple.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <span class="feature-icon">🍕</span>
-                <h3 class="feature-title">Restaurantes Top</h3>
-                <p class="feature-desc">
-                    Desde pizzas 2x1 hasta descuentos en sushi. Cafés, bares, comida rápida. 
-                    Los mejores locales de tu zona con ofertas exclusivas.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <span class="feature-icon">🎯</span>
-                <h3 class="feature-title">Personalizado</h3>
-                <p class="feature-desc">
-                    Tú eliges qué tipo de ofertas te interesan: comida rápida, restaurantes, 
-                    cafés, bares. Solo recibes lo que quieres.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <span class="feature-icon">🚀</span>
-                <h3 class="feature-title">Sin Apps</h3>
-                <p class="feature-desc">
-                    No necesitas descargar nada. Todo funciona en WhatsApp que ya tienes. 
-                    Simple, directo, sin complicaciones.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section class="how-it-works" id="como-funciona">
-        <h2 class="section-title">¿Cómo Funciona?</h2>
-        <p class="section-subtitle">En 4 pasos estás dentro</p>
-
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3 class="step-title">Envía "Hola"</h3>
-                <p class="step-desc">
-                    Abre WhatsApp y envía "Hola" al +54 9 11 2656 9371. 
-                    Te respondemos al instante.
-                </p>
-            </div>
-
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3 class="step-title">Elige Tu Comuna</h3>
-                <p class="step-desc">
-                    Te preguntamos en qué comuna vives o trabajas: 
-                    Providencia, Las Condes o Ñuñoa.
-                </p>
-            </div>
-
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3 class="step-title">Tus Intereses</h3>
-                <p class="step-desc">
-                    Seleccionas qué te gusta: comida rápida, restaurantes, 
-                    cafés, sushi, bares. Lo que quieras.
-                </p>
-            </div>
-
-            <div class="step">
-                <div class="step-number">4</div>
-                <h3 class="step-title">¡Listo!</h3>
-                <p class="step-desc">
-                    Desde mañana a las 9 AM recibes las mejores ofertas 
-                    de tu barrio. Todos los días.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section class="offers-preview" id="ofertas">
-        <h2 class="section-title">Ofertas de Ejemplo</h2>
-        <p class="section-subtitle">Esto es lo que podrías recibir mañana</p>
-
-        <div class="offers-grid">
-            <div class="offer-card">
-                <div class="offer-badge">2x1</div>
-                <div class="offer-content">
-                    <h3 class="offer-title">🍕 Il Bosco</h3>
-                    <p class="offer-location">📍 Providencia - Metro Los Leones</p>
-                    <p class="offer-details">
-                        2x1 en pizzas familiares<br>
-                        Solo almuerzo (12-16hrs)<br>
-                        <strong>Código: OFERTON2X1</strong>
-                    </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="#demo" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl font-bold text-lg btn-shine hover:shadow-2xl transition">
+                        Probar Gratis 30 Días
+                    </a>
+                    <a href="#como-funciona" class="px-8 py-4 glass rounded-xl font-semibold text-lg hover:bg-white/5 transition">
+                        Ver Cómo Funciona →
+                    </a>
+                </div>
+                
+                <div class="flex items-center gap-8 pt-4">
+                    <div>
+                        <div class="text-3xl font-bold gradient-text">500+</div>
+                        <div class="text-sm text-gray-400">Negocios activos</div>
+                    </div>
+                    <div class="w-px h-12 bg-gray-700"></div>
+                    <div>
+                        <div class="text-3xl font-bold gradient-text">50K+</div>
+                        <div class="text-sm text-gray-400">Clientes atendidos</div>
+                    </div>
+                    <div class="w-px h-12 bg-gray-700"></div>
+                    <div>
+                        <div class="text-3xl font-bold gradient-text">-70%</div>
+                        <div class="text-sm text-gray-400">Tiempo de espera</div>
+                    </div>
                 </div>
             </div>
-
-            <div class="offer-card">
-                <div class="offer-badge">20%</div>
-                <div class="offer-content">
-                    <h3 class="offer-title">🍣 Osaka</h3>
-                    <p class="offer-location">📍 Las Condes - Nueva Costanera</p>
-                    <p class="offer-details">
-                        20% OFF en todo el menú<br>
-                        Solo delivery directo<br>
-                        <strong>Código: OFERTON20</strong>
-                    </p>
-                </div>
-            </div>
-
-            <div class="offer-card">
-                <div class="offer-badge">$2.500</div>
-                <div class="offer-content">
-                    <h3 class="offer-title">☕ Coffee Mantra</h3>
-                    <p class="offer-location">📍 Ñuñoa - Plaza Ñuñoa</p>
-                    <p class="offer-details">
-                        Café + croissant $2.500<br>
-                        6:30-10:00 AM<br>
-                        <strong>Muestra este mensaje</strong>
-                    </p>
+            
+            <!-- Right: Visual Demo -->
+            <div class="relative fade-up stagger-2">
+                <!-- Phone mockup -->
+                <div class="relative mx-auto w-[320px] float">
+                    <!-- WhatsApp notification -->
+                    <div class="absolute -top-4 -left-4 glass rounded-2xl p-4 max-w-xs hover-lift">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fab fa-whatsapp text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm">Restaurante La Plaza</div>
+                                <div class="text-xs text-gray-400">hace 2 segundos</div>
+                            </div>
+                        </div>
+                        <div class="text-sm">
+                            🎉 <span class="font-semibold">¡Es tu turno, Juan!</span><br/>
+                            Mesa lista. Por favor acércate en los próximos 5 minutos.
+                        </div>
+                    </div>
+                    
+                    <!-- Main screen -->
+                    <div class="relative glass rounded-3xl p-6 border-2 border-indigo-500/30">
+                        <div class="text-center mb-6">
+                            <div class="text-7xl font-black gradient-text mb-2">#3</div>
+                            <div class="text-sm text-gray-400">Tu posición en la fila</div>
+                        </div>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+                                <span class="text-gray-400">Personas adelante:</span>
+                                <span class="font-bold">2</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+                                <span class="text-gray-400">Tiempo estimado:</span>
+                                <span class="font-bold text-green-400">~8 minutos</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+                                <span class="text-gray-400">Estado:</span>
+                                <span class="inline-flex items-center gap-1">
+                                    <span class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+                                    <span class="font-bold">Esperando</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-indigo-500/10 border border-indigo-500/30 rounded-lg">
+                            <div class="text-xs text-gray-400 mb-1">Registrado como:</div>
+                            <div class="font-semibold">Juan Pérez · 4 personas</div>
+                            <div class="text-xs text-gray-400 mt-1 mono">+598 99 123 456</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Confirmation badge -->
+                    <div class="absolute -bottom-4 -right-4 glass rounded-2xl p-4 hover-lift">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div class="text-sm">
+                                <div class="font-bold text-green-400">Confirmado</div>
+                                <div class="text-xs text-gray-400">Vía WhatsApp</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="final-cta" id="contacto">
-        <h2>Empieza a Ahorrar Hoy</h2>
-        <p>
-            Únete gratis a Ofertón y recibe las mejores ofertas de tu barrio 
-            todos los días en WhatsApp. Sin costo, sin apps, sin complicaciones.
-        </p>
-
-        <a href="https://wa.me/5491126569371?text=Hola%21%20Quiero%20recibir%20ofertas%20de%20Ofert%C3%B3n" 
-           class="btn btn-primary" 
-           target="_blank">
-            <span>📱 Regístrate Ahora por WhatsApp</span>
-        </a>
-
-        <div class="whatsapp-number">+54 9 11 2656 9371</div>
+    <!-- Problema/Solución -->
+    <section class="py-32 px-6 relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-20 fade-up">
+                <h2 class="text-5xl font-bold mb-6">
+                    El problema que <span class="gradient-text">todos conocemos</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Las filas tradicionales son caóticas, ineficientes y frustran a tus clientes
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Antes -->
+                <div class="glass rounded-3xl p-8 hover-lift fade-up stagger-1">
+                    <div class="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-times text-3xl text-red-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-red-400">Antes</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-circle text-xs mt-2 text-red-400"></i>
+                            <span>Clientes esperando de pie en la puerta</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-circle text-xs mt-2 text-red-400"></i>
+                            <span>Papelitos con números que se pierden</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-circle text-xs mt-2 text-red-400"></i>
+                            <span>Staff gritando nombres y números</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-circle text-xs mt-2 text-red-400"></i>
+                            <span>Aglomeraciones en la entrada</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-circle text-xs mt-2 text-red-400"></i>
+                            <span>Clientes perdidos que se fueron</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-circle text-xs mt-2 text-red-400"></i>
+                            <span>Control manual con planilla o cuaderno</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Ahora -->
+                <div class="glass rounded-3xl p-8 border-2 border-indigo-500/30 hover-lift fade-up stagger-2">
+                    <div class="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-check text-3xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-green-400">Con MasRapido</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                            <span>Cliente escanea QR y se registra desde su celular</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                            <span>Esperan donde quieran: tomando café, paseando, en el auto</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                            <span>Notificación automática por WhatsApp cuando sea su turno</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                            <span>Entrada despejada, sin aglomeraciones</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                            <span>Seguimiento en tiempo real de su posición</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                            <span>Panel digital para el staff con métricas</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <footer>
-        <p>
-            Ofertón Chile 2026 • 
-            <a href="mailto:hola@oferton.cl">hola@oferton.cl</a> • 
-            Providencia, Las Condes, Ñuñoa
-        </p>
-        <p style="margin-top: 1rem; font-size: 0.9rem;">
-            🇨🇱 Hecho con ❤️ en Santiago de Chile
-        </p>
-        <p style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.7;">
-            🤖 Asistido por IA para personalizar ofertas
-        </p>
+    <!-- Cómo funciona -->
+    <section id="como-funciona" class="py-32 px-6 bg-pattern relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-20 fade-up">
+                <h2 class="text-5xl font-bold mb-6">
+                    <span class="gradient-text">Súper simple</span> en 3 pasos
+                </h2>
+                <p class="text-xl text-gray-400">
+                    Para tus clientes es intuitivo. Para ti, sin complicaciones.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="glass rounded-3xl p-8 hover-lift fade-up stagger-1">
+                    <div class="w-20 h-20 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center text-3xl font-black mb-6 pulse-glow">
+                        1
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Cliente escanea QR</h3>
+                    <p class="text-gray-400 mb-4">
+                        Colocas un QR en la entrada. El cliente lo escanea con su celular y se registra en segundos con nombre, teléfono y cantidad de personas.
+                    </p>
+                    <div class="p-4 bg-white/5 rounded-xl text-sm text-gray-400 mono">
+                        Sin apps que descargar →<br/>
+                        100% web →<br/>
+                        Funciona en cualquier teléfono →
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="glass rounded-3xl p-8 hover-lift fade-up stagger-2">
+                    <div class="w-20 h-20 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center text-3xl font-black mb-6 pulse-glow">
+                        2
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Espera virtual</h3>
+                    <p class="text-gray-400 mb-4">
+                        El cliente ve su posición en tiempo real y el tiempo estimado. Puede irse a pasear, tomar algo, o esperar en el auto.
+                    </p>
+                    <div class="p-4 bg-white/5 rounded-xl text-sm text-gray-400 mono">
+                        Seguimiento en vivo →<br/>
+                        Tiempo estimado actualizado →<br/>
+                        Sin necesidad de estar presente →
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="glass rounded-3xl p-8 hover-lift fade-up stagger-3">
+                    <div class="w-20 h-20 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center text-3xl font-black mb-6 pulse-glow">
+                        3
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Notificación automática</h3>
+                    <p class="text-gray-400 mb-4">
+                        Cuando sea su turno, recibe un WhatsApp automático. Tiene 5 minutos para llegar. Si no llega, pasa al siguiente.
+                    </p>
+                    <div class="p-4 bg-white/5 rounded-xl text-sm text-gray-400 mono">
+                        WhatsApp + SMS →<br/>
+                        Confirmación de lectura →<br/>
+                        Gestión automática →
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Casos de uso -->
+    <section class="py-32 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-20 fade-up">
+                <h2 class="text-5xl font-bold mb-6">
+                    Perfecto para <span class="gradient-text">cualquier negocio</span>
+                </h2>
+                <p class="text-xl text-gray-400">
+                    Donde haya espera, MasRapido mejora la experiencia
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-1">
+                    <div class="text-4xl mb-4">🍽️</div>
+                    <h3 class="text-xl font-bold mb-2">Restaurantes</h3>
+                    <p class="text-gray-400 text-sm">Evita aglomeraciones en la entrada. Clientes esperan tomando algo en el bar o paseando.</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-2">
+                    <div class="text-4xl mb-4">☕</div>
+                    <h3 class="text-xl font-bold mb-2">Cafeterías</h3>
+                    <p class="text-gray-400 text-sm">Pico de la mañana sin caos. Clientes se registran y vuelven cuando su pedido esté listo.</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-3">
+                    <div class="text-4xl mb-4">🏥</div>
+                    <h3 class="text-xl font-bold mb-2">Clínicas</h3>
+                    <p class="text-gray-400 text-sm">Sala de espera organizada. Pacientes esperan en su auto hasta que los llamen.</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-1">
+                    <div class="text-4xl mb-4">💇</div>
+                    <h3 class="text-xl font-bold mb-2">Salones de belleza</h3>
+                    <p class="text-gray-400 text-sm">Sin perder turnos walk-in. Cliente llega, se registra, y vuelve cuando haya disponibilidad.</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-2">
+                    <div class="text-4xl mb-4">🏪</div>
+                    <h3 class="text-xl font-bold mb-2">Retail</h3>
+                    <p class="text-gray-400 text-sm">Black Friday sin caos. Control de aforo. Clientes entran de forma ordenada.</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-6 hover-lift fade-up stagger-3">
+                    <div class="text-4xl mb-4">🎫</div>
+                    <h3 class="text-xl font-bold mb-2">Eventos</h3>
+                    <p class="text-gray-400 text-sm">Entrada a conciertos, ferias o exposiciones sin filas físicas interminables.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="py-32 px-6 bg-pattern">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-20 fade-up">
+                <h2 class="text-5xl font-bold mb-6">
+                    Precios <span class="gradient-text">transparentes</span>
+                </h2>
+                <p class="text-xl text-gray-400">
+                    Sin costos ocultos. Cancela cuando quieras.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Básico -->
+                <div class="glass rounded-3xl p-8 hover-lift fade-up stagger-1">
+                    <div class="text-sm font-semibold text-gray-400 mb-2">BÁSICO</div>
+                    <div class="text-5xl font-black mb-6">
+                        $19<span class="text-2xl text-gray-400">/mes</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-300">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            1 fila virtual
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            100 clientes/mes
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            WhatsApp + SMS
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            Soporte email
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 glass rounded-xl font-semibold hover:bg-white/10 transition">
+                        Empezar prueba gratis
+                    </button>
+                </div>
+                
+                <!-- Pro -->
+                <div class="relative glass rounded-3xl p-8 border-2 border-indigo-500 hover-lift fade-up stagger-2">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full text-xs font-bold">
+                        MÁS POPULAR
+                    </div>
+                    <div class="text-sm font-semibold text-gray-400 mb-2">PRO</div>
+                    <div class="text-5xl font-black mb-6">
+                        $49<span class="text-2xl text-gray-400">/mes</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            5 filas virtuales
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            1000 clientes/mes
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            WhatsApp + SMS ilimitado
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            Analytics avanzado
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            Soporte prioritario
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl font-bold btn-shine hover:shadow-2xl transition">
+                        Empezar prueba gratis
+                    </button>
+                </div>
+                
+                <!-- Enterprise -->
+                <div class="glass rounded-3xl p-8 hover-lift fade-up stagger-3">
+                    <div class="text-sm font-semibold text-gray-400 mb-2">ENTERPRISE</div>
+                    <div class="text-5xl font-black mb-6">
+                        Custom
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-300">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            Filas ilimitadas
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            Clientes ilimitados
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            API acceso
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            Marca blanca
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400"></i>
+                            Soporte 24/7
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 glass rounded-xl font-semibold hover:bg-white/10 transition">
+                        Contactar ventas
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 text-gray-400">
+                <p>✨ 30 días de prueba gratis. Sin tarjeta de crédito.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section id="demo" class="py-32 px-6">
+        <div class="max-w-4xl mx-auto text-center fade-up">
+            <h2 class="text-6xl font-black mb-8 leading-tight">
+                Transforma la experiencia<br/>
+                de <span class="gradient-text">tus clientes</span>
+            </h2>
+            <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+                Únete a cientos de negocios que ya eliminaron las filas físicas y mejoraron su operación
+            </p>
+            <form class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto mb-8">
+                <input 
+                    type="email" 
+                    placeholder="tu@negocio.com" 
+                    class="flex-1 px-6 py-4 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                <button 
+                    type="submit" 
+                    class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl font-bold btn-shine hover:shadow-2xl transition whitespace-nowrap"
+                >
+                    Empezar Gratis
+                </button>
+            </form>
+            <p class="text-sm text-gray-500">
+                🎁 30 días gratis · ⚡ Setup en 5 minutos · 🚫 Sin compromiso
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 px-6 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                            <span class="text-xl font-bold">⚡</span>
+                        </div>
+                        <span class="text-xl font-bold mono">MasRapido</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Elimina las filas físicas.<br/>Mejora la experiencia.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Producto</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="como-funciona.html" class="hover:text-white transition">Cómo Funciona</a></li>
+                        <li><a href="#planes" class="hover:text-white transition">Precios</a></li>
+                        <li><a href="prueba-gratis.html" class="hover:text-white transition">Prueba Gratis</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Empresa</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Sobre nosotros</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Privacidad</a></li>
+                        <li><a href="#" class="hover:text-white transition">Términos</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Shitpost Section -->
+            <div class="pt-8 border-t border-gray-800">
+                <div class="glass rounded-2xl p-6 mb-8">
+                    <p class="text-sm text-gray-400 text-center mono leading-relaxed">
+                        🤖 <span class="text-indigo-400">Hecho con IA</span> • Hay dos tipos de personas: las que abrazan la IA y automatizan su negocio, y las que todavía usan Excel 97 y máquinas de fax. Ambos existen en la misma línea de tiempo, pero uno vive en el futuro y el otro es una pieza de museo. <span class="text-purple-400">Sin juzgar... bueno, quizás un poquito.</span> 🚀 Elige tu realidad con cuidado — una tiene notificaciones por WhatsApp, la otra tiene papelitos numerados.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+                    <p>&copy; 2026 MasRapido. Hecho por humanos (con superpoderes de IA). Todos los derechos reservados.</p>
+                    <div class="flex gap-6">
+                        <a href="#" class="hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
-
-    <script>
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Animate elements on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.feature-card, .step, .offer-card').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Track WhatsApp button clicks
-        document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-            link.addEventListener('click', () => {
-                console.log('WhatsApp registration clicked');
-            });
-        });
-    </script>
 </body>
 </html>
